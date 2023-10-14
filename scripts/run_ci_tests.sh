@@ -32,6 +32,6 @@ verilator --version
 mkdir build
 cd build
 cmake ..
-make -j 8
+make -j `nproc`
 make tests
 make fpgalint
