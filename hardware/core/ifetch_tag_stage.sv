@@ -115,7 +115,7 @@ module ifetch_tag_stage
 
     initial
     begin
-        assert((`L1I_SETS & (`L1I_SETS - 1)) == 0);
+        assert((`L1I_SETS & (`L1I_SETS - 1)) == 0); //it checks if the `L1I_SETS is a power of 2.
     end
 
     //
@@ -275,6 +275,7 @@ module ifetch_tag_stage
         end
     end
 
+    //pseudo-LRU 
     cache_lru #(
         .NUM_WAYS(`L1I_WAYS),
         .NUM_SETS(`L1I_SETS)

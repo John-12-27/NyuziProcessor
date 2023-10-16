@@ -38,6 +38,18 @@ module rr_arbiter
 
     localparam BIT_IDX_WIDTH = $clog2(NUM_REQUESTERS);
 
+    /**********************************************************************************************
+     The section below is like :
+     assign grant_oh[0] = request[0] & priority_oh[0]                                           ||
+                          request[0] & priority_oh[1] & !request[1] & !request[2] & !request[3] ||
+                          request[0] & priority_oh[2] & !request[2] & !request[3]               ||
+                          request[0] & priority_oh[3] & !request[3]                             ;
+     assign grant_oh[1] = request[1] & priority_oh[0] & !request[0]                             ||
+                          request[1] & priority_oh[1]                                           ||
+                          request[1] & priority_oh[2] & !request[2] & !request[3] & !request[0] ||
+                          request[1] & priority_oh[3] & !request[3] & !request[0]               ;
+     ...
+    **********************************************************************************************/
     always_comb
     begin
         for (int grant_idx = 0; grant_idx < NUM_REQUESTERS; grant_idx++)
@@ -59,7 +71,7 @@ module rr_arbiter
         end
     end
 
-    // rotate left
+    // rotate left shift
     assign priority_oh_nxt = {grant_oh[NUM_REQUESTERS - 2:0],
         grant_oh[NUM_REQUESTERS - 1]};
 
@@ -69,7 +81,7 @@ module rr_arbiter
             priority_oh <= 1;
         else if (request != 0 && update_lru)
         begin
-            assert($onehot0(priority_oh_nxt));
+            assert($onehot0(priority_oh_nxt)); //it checks if exactly one or none of the bits in the vector is high
             priority_oh <= priority_oh_nxt;
         end
     end
