@@ -227,9 +227,9 @@ module instruction_decode_stage(
     end
 
     assign fmt_r = ifd_instruction[31:29] == 3'b110;    // register arithmetic
-    assign fmt_i = ifd_instruction[31] == 1'b0;    // immediate arithmetic
-    assign fmt_m = ifd_instruction[31:30] == 2'b10;
-    assign getlane = (fmt_r || fmt_i) && alu_op == OP_GETLANE;
+    assign fmt_i = ifd_instruction[31] == 1'b0;         // immediate arithmetic
+    assign fmt_m = ifd_instruction[31:30] == 2'b10;     // memory access
+    assign getlane = (fmt_r || fmt_i) && alu_op == OP_GETLANE; //TODO: what's the function of getlane ?
 
     assign syscall = fmt_i && 6'(ifd_instruction[28:24]) == OP_SYSCALL;
     assign breakpoint = fmt_r && ifd_instruction[25:20] == OP_BREAKPOINT;

@@ -151,6 +151,7 @@ module ifetch_data_stage(
 
     //
     // Cache data
+    // john: i wanna change it to multiple banks' sram, read all datas first and then pickup the needed
     //
     sram_1r1w #(
         .DATA_WIDTH(CACHE_LINE_BITS),
@@ -169,7 +170,7 @@ module ifetch_data_stage(
     assign fetched_word = fetched_cache_line[32 * cache_lane_idx+:32];
     assign ifd_instruction = ocd_halt_latched
         ? ocd_inject_inst
-        : {fetched_word[7:0], fetched_word[15:8], fetched_word[23:16], fetched_word[31:24]};
+        : {fetched_word[7:0], fetched_word[15:8], fetched_word[23:16], fetched_word[31:24]}; //big endian
 
     assign ifd_update_lru_en = cache_hit && ift_instruction_requested;
     assign ifd_update_lru_way = way_hit_idx;
