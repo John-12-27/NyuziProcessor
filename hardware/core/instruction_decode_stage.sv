@@ -241,7 +241,10 @@ module instruction_decode_stage(
         || ifd_page_fault || ifd_executable_fault;
 
     // Check for TLB miss first, since permission bits are not valid if there
-    // is a TLB miss. The order of the remaining faults should match that in
+    // is a TLB miss(John: but i think the previous module has ensured that these 
+    // faults won't occur at the same time, eg: the tlb must hit when the 
+    // ifd_supervisor_fault is valid). 
+    // The order of the remaining faults should match that in
     // dcache_data_stage for consistency.
     always_comb
     begin
@@ -301,7 +304,7 @@ module instruction_decode_stage(
     end
 
     assign decoded_instr_nxt.has_scalar2 = dlut_out.scalar2_loc != SCLR2_NONE && !nop
-        && !has_trap;
+        && !has_trap; //单操作数的指令使用op2作为源操作数
 
     // XXX: assigning this directly to decoded_instr_nxt.scalar_sel2 causes Verilator issues when
     // other blocks read it. Added another signal to work around this.
