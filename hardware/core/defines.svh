@@ -406,13 +406,13 @@ typedef struct packed {
     scalar_t read_value;
 } iorsp_packet_t;
 
-parameter AXI_ADDR_WIDTH = 32;
 
 endpackage : defines
 
 // Non-cached I/O bus (peripheral register access) external interface
 // write_en and read_en are mutually exclusive. When read_en is asserted, the
 // data will appear on read_data one cycle later.
+
 interface io_bus_interface;
     logic write_en;
     logic read_en;
@@ -432,7 +432,7 @@ interface axi4_interface;
     logic m_aresetn;
 
     // Write address channel (Table A2-2)
-    logic [AXI_ADDR_WIDTH - 1:0] m_awaddr;
+    logic [`AXI_ADDR_WIDTH - 1:0] m_awaddr;
     logic [7:0] m_awlen;
     logic [2:0] m_awprot;
     logic m_awvalid;
@@ -449,7 +449,7 @@ interface axi4_interface;
     logic m_bready;
 
     // Read address channel (Table A2-5)
-    logic [AXI_ADDR_WIDTH - 1:0] m_araddr;
+    logic [`AXI_ADDR_WIDTH - 1:0] m_araddr;
     logic [7:0] m_arlen;
     logic [2:0] m_arprot;
     logic m_arvalid;

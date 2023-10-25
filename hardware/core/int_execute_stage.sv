@@ -242,7 +242,7 @@ module int_execute_stage(
                     OP_SEXT8: lane_result = scalar_t'($signed(lane_operand2[7:0]));
                     OP_SEXT16: lane_result = scalar_t'($signed(lane_operand2[15:0]));
                     OP_SHUFFLE,
-                    OP_GETLANE: lane_result = of_operand1[~lane_operand2];
+                    OP_GETLANE: lane_result = of_operand1[~lane_operand2]; //??? ~lane_operand2 ???
                     OP_RECIPROCAL: lane_result = reciprocal;
                     default: lane_result = 0;
                 endcase

@@ -46,6 +46,7 @@
 `define L2_WAYS 8
 `define L2_SETS 256        // 128k
 `define AXI_DATA_WIDTH 32
+`define AXI_ADDR_WIDTH 32
 `define ITLB_ENTRIES 64
 `define DTLB_ENTRIES 64
 `define TLB_WAYS 4
