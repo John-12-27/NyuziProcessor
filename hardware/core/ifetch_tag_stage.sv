@@ -207,7 +207,7 @@ module ifetch_tag_stage
             end
 
             always_ff @(posedge clk)
-            begin
+            begin//John: i think  maybe it need to be cleared while reset.
                 // Fetch cache line state for pipeline
                 if (l2i_itag_update_en[way_idx] && l2i_itag_update_set == pc_to_fetch.set_idx)
                     ift_valid[way_idx] <= l2i_itag_update_valid;    // Bypass

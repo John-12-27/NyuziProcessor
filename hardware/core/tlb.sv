@@ -139,7 +139,7 @@ module tlb
 
             always_ff @(posedge clk)
             begin
-                if (!tlb_read_en)
+                if (!tlb_read_en) //John: i think  maybe it need to be cleared while reset and !tlb_read_en.
                     way_valid <= 0;
                 else if (way_update_oh[way_idx] && update_set_idx == request_set_idx)
                     way_valid <= update_valid;  // Bypass
